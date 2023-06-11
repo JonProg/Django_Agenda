@@ -4,5 +4,5 @@ from django.urls import path
 app_name = 'contact'
 
 urlpatterns = [
-    path('', views.home , name='home'),
+    path('', views.index , name='index'),
 ]
