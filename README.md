@@ -5,6 +5,3 @@
 
 <h2>Functions</h2>
 <hr>
-
-<h2>Contribuing</h2>
-<hr>
