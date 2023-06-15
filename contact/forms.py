@@ -27,7 +27,7 @@ class ContactForm(forms.ModelForm):
             'email', 'description', 'category',
         )
     
-#Serve para fazermos alguma alteração o validação dos dados antes dos mesmo serem enviados para o servidor    
+#Serve para fazermos algumas alterações ou validações dos dados antes dos mesmo serem enviados para o servidor    
     def clean(self): 
         cleaned_data = self.cleaned_data
         first_name = cleaned_data.get('first_name')
