@@ -1,8 +1,11 @@
 from contact.forms import ContactForm
 from contact.models import Contact
 from django.urls import reverse
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
+@login_required('contact:login')
 def create(request):
     form_action = reverse('contact:create')
 
@@ -14,8 +17,11 @@ def create(request):
         }
 
         if form.is_valid():
-            contact = form.save()
-            return redirect('contact:update', contact_id = contact.pk)
+            contact = form.save(commit=False)
+            contact.owner = request.user
+            contact.save()
+            messages.success(request, 'Contato criado com sucesso!')
+            return redirect('contact:contact', contact_id = contact.pk)
 
         #Serve para mostrar os erros na tela
         return render(
@@ -34,8 +40,10 @@ def create(request):
         context,
         )
 
+
+@login_required('contact:login')
 def update(request, contact_id):
-    contact = get_object_or_404(Contact, pk = contact_id, show = True)
+    contact = get_object_or_404(Contact, pk = contact_id, show = True, owner= request.user)
     form_action = reverse('contact:update', args= (contact_id,))
 
     if request.method == 'POST':
@@ -66,8 +74,9 @@ def update(request, contact_id):
         )
 
 
+@login_required('contact:login')
 def delete(request, contact_id):
-    contact = get_object_or_404(Contact, pk = contact_id, show = True)
+    contact = get_object_or_404(Contact, pk = contact_id, show = True, owner= request.user)
     confirmation = request.POST.get('confirmation','no')
 
     if confirmation == 'yes':

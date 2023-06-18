@@ -21,4 +21,3 @@ urlpatterns = [
 
 ]
 
-#graphql python -- lembrar
