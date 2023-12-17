@@ -1,7 +1,5 @@
 <h1> Projeto Agenda <img src="to_readme\docs.png" width="25" height="25" align=center></img></h1>
 
-<br>
-
 ### Landing Page |
 <br>
 
