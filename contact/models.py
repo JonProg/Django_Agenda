@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from utils.images import resize_image
 from django.contrib.auth.models import User
 
 class Category(models.Model):
@@ -34,4 +35,19 @@ class Contact(models.Model):
 
     def __str__(self) -> str:
         return f'{self.first_name} {self.last_name}'
+    
+
+    def save(self, *args, **kwargs):
+
+        current_picture_name = str(self.picture.name)
+        super_save = super().save(*args, **kwargs)
+        picture_changed = False
+
+        if self.picture:
+            picture_changed = current_picture_name != self.picture.name
+
+        if picture_changed:
+            resize_image(self.picture)
+
+        return super_save
 
