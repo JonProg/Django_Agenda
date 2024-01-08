@@ -70,16 +70,16 @@ class RegisterForm(UserCreationForm):
 
         return email
     
-    def clean_username(self):
-        username = self.cleaned_data.get('username') # Pegando o valor do username
+        def clean_username(self):
+            username = self.cleaned_data.get('username') # Pegando o valor do username
 
-        if User.objects.filter(username=username).exists():
-            self.add_error(
-                'username',
-                ValidationError('Nome de usuário já está em uso', code='invalid')
-            )
+            if User.objects.filter(username=username).exists():
+                self.add_error(
+                    'username',
+                    ValidationError('Nome de usuário já está em uso', code='invalid')
+                )
 
-        return username
+            return username
     
 class RegisterUpdateForm(forms.ModelForm):
     first_name = forms.CharField(
